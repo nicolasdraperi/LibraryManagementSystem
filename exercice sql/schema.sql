@@ -23,3 +23,17 @@ create table enrollments (
     foreign key (student_id) references students(student_id),
     foreign key (course_id) references courses(course_id)
 );
+
+
+/* Tache 7*/
+
+delete from enrollments
+where course_id = 101;
+
+delete from students
+where student_id not in (
+    select distinct student_id
+    from enrollments
+);
+
+
