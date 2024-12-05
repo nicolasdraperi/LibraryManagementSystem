@@ -23,3 +23,9 @@ insert into enrollments (enrollment_id, student_id, course_id) values
 (6, 1, 103),
 (7, 2, 103),
 (8, 3, 104);
+
+
+
+insert into students (student_id, name, age, gender) values
+(6, 'Fiona Taylor', 24, 'female'); /*Juste pour la task 3*/
+
