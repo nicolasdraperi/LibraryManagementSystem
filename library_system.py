@@ -12,8 +12,11 @@ class Library:
     def __init__(self):
         self.books = []
 
-    def add_book(self, title: str, author: str):
-        self.books.append(Book(title, author))
+    def add_book(self, title, author):
+        book = Book(title, author)
+        self.books.append(book)
+        with open("library_data.txt", "a") as file:
+            file.write(book.title + ',' + book.author + ',' + str(book.is_Available) + '\n')
 
     def list_books(self):
         return self.books
@@ -75,16 +78,75 @@ class Student:
         library.accept_return(book_title, self)
 
 
-lib = Library()
-lib.add_book("1984", "George Orwell")
-lib.add_book("To Kill a Mockingbird", "Harper Lee")
-lib.add_book("The Catcher in the Rye", "J.D. Salinger")
+def run_library_system():
+    library = Library()
 
-lib.save_books("library_data.txt")
 
-lib.load_books("library_data.txt")
+    try:
+        library.load_books("library_data.txt")
+        print("Library data loaded successfully from 'library_data.txt'.")
+    except FileNotFoundError:
+        print("File 'library_data.txt' not found. Starting with an empty library.")
 
-print("\n--- books in file ---")
-for book in lib.list_books():
-    print(book)
-    print("----")
+    student = Student("John Doe")
+
+    while True:
+        print("\n=== Library Menu ===")
+        print("1. View all books")
+        print("2. Search for a book")
+        print("3. Add a new book")
+        print("4. Borrow a book")
+        print("5. Return a book")
+        print("6. Exit")
+        choice = input("Enter your choice (1-6): ")
+
+        if choice == "1":
+            print("\n--- List of Books ---")
+            for book in library.list_books():
+                print("Title: " + book.title)
+                print("Author: " + book.author)
+                print("Available: " + str(book.is_Available))
+                print("----")
+
+        elif choice == "2":
+            query = input("Enter a title or author to search: ")
+            results = library.search_books(query)
+            if results:
+                print("\n--- Search Results ---")
+                for book in results:
+                    print("Title: " + book.title)
+                    print("Author: " + book.author)
+                    print("Available: " + str(book.is_Available))
+                    print("----")
+            else:
+                print("No books found matching the query.")
+
+        elif choice == "3":
+            title = input("Enter the title of the book: ")
+            author = input("Enter the author of the book: ")
+            library.add_book(title, author)
+            print("Book '" + title + "' by " + author + " has been added and saved.")
+
+        elif choice == "4":
+            book_title = input("Enter the title of the book to borrow: ")
+            if library.lend_book(book_title, student):
+                print("You have successfully borrowed '" + book_title + "'.")
+            else:
+                print("Unable to borrow '" + book_title + "'. It may be unavailable or not exist.")
+
+        elif choice == "5":
+            book_title = input("Enter the title of the book to return: ")
+            if book_title in [book.title for book in student.borrowed_books]:
+                library.accept_return(book_title, student)
+                print("You have successfully returned '" + book_title + "'.")
+            else:
+                print("You cannot return '" + book_title + "' because you have not borrowed it.")
+
+        elif choice == "6":
+            print("Exiting the library system. Goodbye!")
+            break
+
+        else:
+            print("Invalid choice. Please try again.")
+
+run_library_system()
