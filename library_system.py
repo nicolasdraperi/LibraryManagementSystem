@@ -18,6 +18,11 @@ class Library:
     def list_books(self):
         return self.books
 
+    def save_books(self, file_path: str):
+        with open(file_path, 'w') as file:
+            for book in self.books:
+                file.write(book.title + ',' + book.author + ',' + str(book.is_Available) + '\n')
+
     def load_books(self, file_path: str):
         with open(file_path, 'r') as file:
             for line in file:
@@ -31,15 +36,15 @@ class Library:
         for book in self.books:
             if book.title == book_title:
                 if not book.is_Available:
-                    print(f"Error: Book '{book_title}' is not available.")
+                    print(f"Error: Book '{book_title}' is not available.")  #texte ecrit par l'autocompleteur
                     return False
                 if book in student.borrowed_books:
-                    print(f"Error: Student already borrowed '{book_title}'.")
+                    print(f"Error: Student already borrowed '{book_title}'.")  #texte ecrit par l'autocompleteur
                     return False
                 book.is_Available = False
                 student.borrowed_books.append(book)
                 return True
-        print(f"Error: Book '{book_title}' not found.")
+        print(f"Error: Book '{book_title}' not found.")  #texte ecrit par l'autocompleteur
         return False
 
     def accept_return(self, book_title: str, student: 'Student'):
@@ -48,7 +53,7 @@ class Library:
                 book.is_Available = True
                 student.borrowed_books.remove(book)
                 return
-        print(f"Error: Book '{book_title}' was not borrowed by the student.")
+        print(f"Error: Book '{book_title}' was not borrowed by the student.")  #texte ecrit par l'autocompleteur
 
     def search_books(self, query: str) -> list:
         result = []
@@ -56,6 +61,7 @@ class Library:
             if query.lower() in book.title.lower() or query.lower() in book.author.lower():
                 result.append(book)
         return result
+
 
 class Student:
     def __init__(self, name: str):
@@ -69,36 +75,16 @@ class Student:
         library.accept_return(book_title, self)
 
 
-
 lib = Library()
 lib.add_book("1984", "George Orwell")
 lib.add_book("To Kill a Mockingbird", "Harper Lee")
 lib.add_book("The Catcher in the Rye", "J.D. Salinger")
 
-student = Student("John Doe")
+lib.save_books("library_data.txt")
 
-print("\n--- Before borrow ---")
+lib.load_books("library_data.txt")
+
+print("\n--- books in file ---")
 for book in lib.list_books():
     print(book)
     print("----")
-
-student.borrow_book("1984", lib)
-
-
-print("\n--- after borrow ---")
-for book in lib.list_books():
-    print(book)
-    print("----")
-
-print("\n--- search of 'George' ---")
-for book in lib.search_books("George"):
-    print(book)
-
-student.return_book("1984", lib)
-student.return_book("1984", lib)
-
-print("\n--- after return ---")
-for book in lib.list_books():
-    print(book)
-    print("----")
-
