@@ -83,7 +83,7 @@ for book in lib.list_books():
     print("----")
 
 student.borrow_book("1984", lib)
-student.borrow_book("1984", lib)  # Tente d'emprunter un livre déjà emprunté
+student.borrow_book("1984", lib)
 
 print("\n--- after borrow ---")
 for book in lib.list_books():
@@ -95,7 +95,7 @@ for book in lib.search_books("George"):
     print(book)
 
 student.return_book("1984", lib)
-student.return_book("1984", lib)  # Tente de retourner un livre déjà retourné
+student.return_book("1984", lib)
 
 print("\n--- after return ---")
 for book in lib.list_books():
