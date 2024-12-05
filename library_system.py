@@ -83,7 +83,7 @@ for book in lib.list_books():
     print("----")
 
 student.borrow_book("1984", lib)
-student.borrow_book("1984", lib)
+
 
 print("\n--- after borrow ---")
 for book in lib.list_books():
