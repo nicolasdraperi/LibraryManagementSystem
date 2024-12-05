@@ -27,6 +27,20 @@ class Library:
                     title, author = line.split(',', 1)
                     self.add_book(title.strip(), author.strip())
 
+    def lend_book(self, book_title: str, student: "Student") -> bool:
+        for book in self.books:
+            if book.title == book_title and book.is_Available:
+                book.is_Available = False
+                student.borrowed_books.append(book)
+                return True
+        return False
+
+    def accept_return(self, book_title: str, student: "Student"):
+        for book in student.borrowed_books:
+            if book.title == book_title:
+                book.is_Available = True
+                student.borrowed_books.remove(book)
+                return
 
 class Student:
     def __init__(self, name: str):
@@ -48,20 +62,33 @@ class Student:
                 break
 
 
+
 lib = Library()
-lib.load_books("library_data.txt")
+lib.add_book("1984", "George Orwell")
+lib.add_book("To Kill a Mockingbird", "Harper Lee")
 
 student = Student("John Doe")
-student.borrow_book("1984", lib)
 
-books = lib.list_books()
-for book in books:
+print("\n--- Before borrow ---")
+for book in lib.list_books():
     print(book)
-    print('----')
+    print("----")
 
-student.return_book("1984", lib)
+lib.lend_book("1984", student)
 
-for book in books:
+print("\n--- After borrow ---")
+for book in lib.list_books():
     print(book)
-    print('----')
+    print("----")
+
+print("\n--- books borowed by jhon ---")
+for book in student.borrowed_books:
+    print(book)
+
+lib.accept_return("1984", student)
+
+print("\n--- after borrow ---")
+for book in lib.list_books():
+    print(book)
+    print("----")
 
