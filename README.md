@@ -1,3 +1,5 @@
+For python : 
+
 Features ✨
 
 -View All Books: Displays all books in the library with their availability status.
@@ -31,3 +33,56 @@ python library_management_system.py
 
 Interact with the Menu:
 Use the menu to view, search, add, borrow, and return books.
+
+
+For SQL : 
+
+
+📁 File Structure
+schema.sql: Contains the SQL commands to create the database schema, including students, courses, and enrollments tables.
+
+data.sql: Populates the database with initial data for testing and practice.
+
+query.sql: Includes all SQL queries for various tasks like fetching, analyzing, and cleaning data.
+
+The database consists of three tables:
+
+students
+
+Tracks student details.
+
+Columns:
+
+student_id: Primary key (unique identifier).
+
+name: Full name of the student.
+
+age: Age of the student.
+
+gender: Gender of the student.
+
+courses
+
+Stores information about university courses.
+
+Columns:
+
+course_id: Primary key (unique identifier).
+
+course_name: Name of the course.
+
+credits: Number of credits for the course.
+
+capacity: Maximum number of students allowed.
+enrollments
+
+
+Links students to the courses they are enrolled in.
+
+Columns:
+
+enrollment_id: Primary key (auto-increment).
+
+student_id: Foreign key referencing students.student_id.
+
+course_id: Foreign key referencing courses.course_id.
