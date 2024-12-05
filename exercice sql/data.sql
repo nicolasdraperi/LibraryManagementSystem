@@ -29,3 +29,12 @@ insert into enrollments (enrollment_id, student_id, course_id) values
 insert into students (student_id, name, age, gender) values
 (6, 'Fiona Taylor', 24, 'female'); /*Juste pour la task 3*/
 
+insert into courses (course_id, course_name, credits, capacity) values
+(105, 'Quantum Computing', 4, 10); /*Juste pour la task 5*/
+
+/*
+Pour préciser les premiere ligne type instert into sont fait a la main, la gen de donnée est faite par chatgtp
+(j'avais pas d'idée et peu de temps ;-;)
+*/
+
+
